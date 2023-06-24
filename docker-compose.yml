@@ -1,0 +1,39 @@
+version: "3.7"
+
+services:
+
+  database:
+    image: mysql:5.7  
+    container_name: database 
+    environment:
+      MYSQL_ROOT_PASSWORD: gokhan1234
+      MYSQL_DATABASE: bookstore_db
+      MYSQL_USER: gokhanwell
+      MYSQL_PASSWORD: gokhanwell1234
+    networks:
+      - gokhanwellnet
+
+  myapp:
+    image: bookstore-api:latest
+    container_name: myapp
+    environment:
+      MYSQL_DATABASE_HOST: database
+      MYSQL_ROOT_PASSWORD: gokhan1234
+      MYSQL_DATABASE_DB: bookstore_db
+      MYSQL_DATABASE_USER: gokhanwell
+      MYSQL_DATABASE_PASSWORD: gokhanwell1234
+      MYSQL_DATABASE_PORT: 3306
+    restart: always
+    depends_on:
+      - database
+    ports:
+      - "80:80"
+    networks:
+      - gokhanwellnet
+    
+
+networks:
+  gokhanwellnet:
+  
+
+
